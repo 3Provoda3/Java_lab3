@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Laba_3 {
+    public static int countElementsInRange(int[] arr, int x, int b) {
+        int count = 0;
+        for (int num : arr) {
+            if (x <= num && num <= b) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        System.out.println("Введіть значення x: ");
+        int x = scanner.nextInt();
+        System.out.println("Введіть значення b: ");
+        int b = scanner.nextInt();
+        int result = countElementsInRange(arr, x, b);
+        System.out.println("Кількість елементів в межах відрізка [" + x + ";" + b + "]: " + result);
+    }
+}
