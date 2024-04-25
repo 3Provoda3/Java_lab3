@@ -1,0 +1,105 @@
+import java.util.Scanner;
+
+public class Laba_3_1 {
+    private int[] array;
+
+    public void inputArray() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введіть розмірність масиву");
+        int size = scanner.nextInt();
+        array = new int[size];
+        System.out.println("Введіть елементи масиву");
+        for (int i = 0; i < size; i++) {
+            array[i] = scanner.nextInt();
+        }
+        scanner.close(); // Закрити Scanner після використання
+    }
+
+    public void GenerateRandomArray(int size) {
+        array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = (int) (Math.random() * 201) - 100;
+        }
+    }
+
+    public int countElements(int num) {
+        int count = 0;
+        for (int value : array) {
+            if (value < num) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int productBetween() {
+        int firstZeroIndex = -1;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == 0) {
+                firstZeroIndex = i;
+                break;
+            }
+        }
+        if (firstZeroIndex == -1) {
+            return 0;
+        }
+        int secondZeroIndex = -1;
+        for (int i = firstZeroIndex + 1; i < array.length; i++) {
+            if (array[i] == 0) {
+                secondZeroIndex = i;
+                break;
+            }
+        }
+        if (secondZeroIndex == -1) {
+            return 0;
+        }
+        int product = 1;
+        for (int i = firstZeroIndex + 1; i < secondZeroIndex; i++) {
+            product *= array[i];
+        }
+        return product;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Laba_3_1 arrayOps = new Laba_3_1();
+
+        System.out.println("Виберіть метод заповнення масиву: ");
+        System.out.println("1. Ввід з клавіатури");
+        System.out.println("2. Генерування псевдовипадковиї чисел");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                arrayOps.inputArray();
+                break;
+            case 2:
+                System.out.println("Введіть розмірність масиву для генерації: ");
+                int size = scanner.nextInt();
+                arrayOps.GenerateRandomArray(size);
+                break;
+            default:
+                System.out.println("Некоректний вибір. Оберіть 1 або 2");
+                return;
+        }
+
+        System.out.println("Введіть число для порівняння");
+        int num = scanner.nextInt();
+        int count = arrayOps.countElements(num);
+        System.out.println("Кількість елементів масиву, менших за " + num + ": " + count);
+
+        int product = arrayOps.productBetween();
+        System.out.println("Добуток елементів масиву, розташованих між першим і другим нульовими елементами: " + product);
+
+        System.out.println("Бажаєте продовжити роботу? (так/ні)");
+        String continueChoice = scanner.next();
+
+        if (continueChoice.equalsIgnoreCase("ні")) {
+            System.out.println("Дякую за користування програмою. До побачення! ");
+        } else if (!continueChoice.equalsIgnoreCase("так")) {
+            System.out.println("Невірний вибір. Будь ласка, виберіть 'так' або 'ні' ");
+        }
+
+        scanner.close();
+    }
+}
